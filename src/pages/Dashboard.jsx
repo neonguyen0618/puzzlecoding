@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext.jsx";
-import XPBar from "../../components/XPBar.jsx";
+import { AuthContext } from "../context/AuthContext.jsx";
+import XPBar from "../components/XPBar.jsx";
 
 export default function Dashboard() {
   const { user, logout } = useContext(AuthContext);

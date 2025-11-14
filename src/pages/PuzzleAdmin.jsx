@@ -1,6 +1,6 @@
 import { useState } from "react";
-import PuzzleAdminItem from "../../components/PuzzleAdminItem.jsx";
-import FileImportButton from "../../components/FileImportButton.jsx";
+import PuzzleAdminItem from "../components/PuzzleAdminItem.jsx";
+import FileImportButton from "../components/FileImportButton.jsx";
 
 export default function PuzzleAdmin() {
   // FIX: Load from localStorage using lazy initializer instead of useEffect

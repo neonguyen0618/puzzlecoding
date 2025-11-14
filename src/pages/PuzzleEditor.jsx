@@ -1,8 +1,8 @@
 import { useState, useMemo } from "react";
-import PuzzleEditorBlock from "../../components/PuzzleEditorBlock.jsx";
-import PuzzlePreview from "../../components/PuzzlePreview.jsx";
-import CodeEditor from "../../components/CodeEditor.jsx";
-import { saveAsJSON } from "../../utils/fileExport.js";
+import PuzzleEditorBlock from "../components/PuzzleEditorBlock.jsx";
+import PuzzlePreview from "../components/PuzzlePreview.jsx";
+import CodeEditor from "../components/CodeEditor.jsx";
+import { saveAsJSON } from "../utils/fileExport.js";
 
 export default function PuzzleEditor() {
   const [title, setTitle] = useState("");

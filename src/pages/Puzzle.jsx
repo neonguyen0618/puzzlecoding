@@ -1,26 +1,29 @@
 import { useState, useMemo, useContext } from "react";
 import { useParams } from "react-router-dom";
 
-import { htmlBasicsPuzzles } from "../../data/puzzles/htmlBasics.js";
-import { achievements } from "../../data/achievements.js";
+import { htmlBasicsPuzzles } from "../data/puzzles/htmlBasics.js";
+import { achievements } from "../data/achievements.js";
 
-import DragDropBoard from "../../components/DragDropBoard.jsx";
-import LivePreview from "../../components/LivePreview.jsx";
-import MiniShowcase from "../../components/MiniShowcase.jsx";
-import AchievementPopup from "../../components/AchievementPopup.jsx";
+import DragDropBoard from "../components/DragDropBoard.jsx";
+import LivePreview from "../components/LivePreview.jsx";
+import MiniShowcase from "../components/MiniShowcase.jsx";
+import AchievementPopup from "../components/AchievementPopup.jsx";
 
-import { AuthContext } from "../../context/AuthContext.jsx";
+import { AuthContext } from "../context/AuthContext.jsx";
 
-import SoundPlayer from "../../components/SoundPlayer.jsx";
+import SoundPlayer from "../components/SoundPlayer.jsx";
 
-import soundCorrect from "../../sounds/correct.mp3";
-import soundWrong from "../../sounds/wrong.mp3";
-import soundDrop from "../../sounds/drop.mp3";
+import soundCorrect from "../sounds/correct.mp3";
+import soundWrong from "../sounds/wrong.mp3";
+import soundDrop from "../sounds/drop.mp3";
 
 export default function PuzzlePage() {
   const { pathId, levelId } = useParams();
   const { addXP, addAchievement, markLevelCompleted } = useContext(AuthContext);
 
+  /* ===========================
+     LOAD PUZZLE
+  ============================ */
   const puzzle = useMemo(() => {
     if (pathId === "html-basics") {
       return htmlBasicsPuzzles.find((p) => p.id === levelId) || htmlBasicsPuzzles[0];
@@ -28,6 +31,9 @@ export default function PuzzlePage() {
     return htmlBasicsPuzzles[0];
   }, [pathId, levelId]);
 
+  /* ===========================
+     INITIAL SHUFFLED ORDER
+  ============================ */
   const [order, setOrder] = useState(() => {
     const initial = [...puzzle.solution];
     for (let i = initial.length - 1; i > 0; i--) {
@@ -43,18 +49,27 @@ export default function PuzzlePage() {
   const [achievementUnlocked, setAchievementUnlocked] = useState(null);
   const [soundToPlay, setSoundToPlay] = useState(null);
 
+  /* ===========================
+     LIVE PREVIEW HTML
+  ============================ */
   const previewHtml = useMemo(() => {
     const map = {};
     puzzle.blocks.forEach((b) => (map[b.id] = b.code));
     return order.map((id) => map[id]).join("\n");
   }, [order, puzzle.blocks]);
 
+  /* ===========================
+     DRAG REORDER HANDLER
+  ============================ */
   const handleReorder = (newOrder) => {
     setOrder(newOrder);
     setSoundToPlay(soundDrop);
     if (navigator.vibrate) navigator.vibrate(10);
   };
 
+  /* ===========================
+     SUBMIT HANDLER
+  ============================ */
   const handleSubmit = () => {
     if (isSolved) return;
 
@@ -71,15 +86,16 @@ export default function PuzzlePage() {
 
       setSoundToPlay(soundCorrect);
       if (navigator.vibrate) navigator.vibrate([30, 50, 30]);
-    } else {
-      const next = tries + 1;
-      setTries(next);
-
-      setSoundToPlay(soundWrong);
-      if (navigator.vibrate) navigator.vibrate(40);
-
-      if (next >= 3) setShowHints(true);
+      return;
     }
+
+    // WRONG
+    const newTries = tries + 1;
+    setTries(newTries);
+    setSoundToPlay(soundWrong);
+    if (navigator.vibrate) navigator.vibrate(40);
+
+    if (newTries >= 3) setShowHints(true);
   };
 
   return (
@@ -91,6 +107,7 @@ export default function PuzzlePage() {
 
       <div className="puzzle-layout">
         <div className="puzzle-left">
+          {/* Drag + drop board automatically handles incorrect hints */}
           <DragDropBoard
             blocks={puzzle.blocks}
             order={order}
@@ -102,6 +119,7 @@ export default function PuzzlePage() {
           <button className="btn" onClick={handleSubmit} disabled={isSolved}>
             {isSolved ? "Solved!" : "Submit"}
           </button>
+
           <p>Tries: {tries}</p>
         </div>
 
@@ -117,9 +135,7 @@ export default function PuzzlePage() {
         </div>
       )}
 
-      {achievementUnlocked && (
-        <AchievementPopup achievement={achievementUnlocked} />
-      )}
+      {achievementUnlocked && <AchievementPopup achievement={achievementUnlocked} />}
     </div>
   );
 }

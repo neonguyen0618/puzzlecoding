@@ -1,4 +1,4 @@
-import { createContext, useState, } from "react";
+import { createContext, useState, useMemo, useEffect } from "react";
 
 export const ThemeContext = createContext(null);
 
@@ -7,22 +7,32 @@ export function ThemeProvider({ children }) {
     return localStorage.getItem("puzzle_theme") || "light";
   });
 
+  useEffect(() => {
+    // Remove both classes
+    document.body.classList.remove("light", "dark");
+
+    // Add current theme
+    document.body.classList.add(theme);
+
+    // Save preference
+    localStorage.setItem("puzzle_theme", theme);
+  }, [theme]);
+
   const toggleTheme = () => {
-    const t = theme === "light" ? "dark" : "light";
-    setTheme(t);
-    localStorage.setItem("puzzle_theme", t);
+    setTheme((t) => (t === "light" ? "dark" : "light"));
   };
 
-  const value = {
-    theme,
-    toggleTheme
-  };
+  const value = useMemo(
+    () => ({
+      theme,
+      toggleTheme
+    }),
+    [theme]
+  );
 
   return (
     <ThemeContext.Provider value={value}>
-      <div className={theme === "light" ? "theme-light" : "theme-dark"}>
-        {children}
-      </div>
+      {children}
     </ThemeContext.Provider>
   );
 }

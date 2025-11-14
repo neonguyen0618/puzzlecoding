@@ -1,15 +1,15 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Landing from "./pages/Landing/Landing.jsx";
-import Login from "./pages/Login/Login.jsx";
-import Register from "./pages/Register/Register.jsx";
-import Dashboard from "./pages/Dashboard/Dashboard.jsx";
-import PathSelect from "./pages/PathSelect/PathSelect.jsx";
-import LevelSelect from "./pages/LevelSelect/LevelSelect.jsx";
-import PuzzlePage from "./pages/Puzzle/Puzzle.jsx";
-import AchievementsPage from "./pages/Achievements/Achievements.jsx";
-import PuzzleEditor from "./pages/PuzzleEditor/PuzzleEditor.jsx";
-import PuzzleAdmin from "./pages/PuzzleAdmin/PuzzleAdmin.jsx";
+import Landing from "./pages/Landing.jsx";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import PathSelect from "./pages/PathSelect.jsx";
+import LevelSelect from "./pages/LevelSelect.jsx";
+import PuzzlePage from "./pages/Puzzle.jsx";
+import AchievementsPage from "./pages/Achievements.jsx";
+import PuzzleEditor from "./pages/PuzzleEditor.jsx";
+import PuzzleAdmin from "./pages/PuzzleAdmin.jsx";
 
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Header from "./components/Header.jsx";

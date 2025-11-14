@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 
-import { htmlBasicsPuzzles } from "../../data/puzzles/htmlBasics.js";
-import { AuthContext } from "../../context/AuthContext.jsx";
+import { htmlBasicsPuzzles } from "../data/puzzles/htmlBasics.js";
+import { AuthContext } from "../context/AuthContext.jsx";
 
 export default function LevelSelect() {
   const { pathId } = useParams();

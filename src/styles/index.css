@@ -15,6 +15,72 @@
 }
 
 /* ===========================
+   GLOBAL DARK/LIGHT OVERRIDES
+=========================== */
+
+/* Force all nested text colors */
+.light,
+.light * {
+  color: var(--text-light) !important;
+}
+
+.dark,
+.dark * {
+  color: var(--text-dark) !important;
+}
+
+/* Inputs */
+.dark input,
+.dark textarea,
+.dark select {
+  background: #2b2b2b !important;
+  color: var(--text-dark) !important;
+  border-color: #555 !important;
+}
+
+.dark ::placeholder {
+  color: #bbb !important;
+}
+
+.light ::placeholder {
+  color: #666 !important;
+}
+
+/* Puzzle blocks default */
+.dark .puzzle-board div,
+.dark .sortable-item,
+.dark .puzzle-block,
+.dark [data-rbd-draggable-id] {
+  background: #2b2b2b !important;
+  border-color: #666 !important;
+  color: var(--text-dark) !important;
+}
+
+/* Cards */
+.dark .card {
+  background: #262626 !important;
+  color: var(--text-dark) !important;
+}
+
+/* Preview container */
+.dark .preview-container {
+  background: var(--card-bg-dark);
+}
+
+/* Iframe preview */
+.dark .preview-frame {
+  background: #1a1a1a !important;
+  color: #fff !important;
+}
+
+/* Code blocks */
+.dark pre,
+.dark code {
+  background: #1e1e1e !important;
+  color: var(--text-dark) !important;
+}
+
+/* ===========================
    THEME WRAPPERS
 =========================== */
 .light {
@@ -44,7 +110,7 @@
 }
 
 /* ===========================
-   HEADER (UPDATED PHASE 7)
+   HEADER
 =========================== */
 .app-header {
   display: flex;
@@ -79,7 +145,7 @@
   font-weight: 600;
 }
 
-/* Theme toggle button */
+/* Theme toggle */
 .theme-toggle-btn {
   padding: 0.4rem 0.8rem;
   border-radius: var(--border-radius);
@@ -151,7 +217,7 @@
 }
 
 /* ===========================
-   GRID + CARDS
+   CARDS + GRID
 =========================== */
 .card-grid {
   display: grid;
@@ -184,7 +250,7 @@
   cursor: not-allowed;
 }
 
-/* Level card progress (completed state) */
+/* Level badge */
 .level-card .badge {
   position: absolute;
   top: 0.75rem;
@@ -306,7 +372,7 @@
 }
 
 /* ===========================
-   PREVIEW FRAME
+   PREVIEW
 =========================== */
 .preview-container {
   border-radius: var(--border-radius);
@@ -345,7 +411,6 @@
   background: var(--card-bg-dark);
 }
 
-/* Shake animation */
 @keyframes shake {
   0% { transform: translateX(0); }
   25% { transform: translateX(-4px); }
@@ -354,7 +419,6 @@
   100% { transform: translateX(0); }
 }
 
-/* Achievement popup fade */
 .achievement-popup {
   opacity: 0;
   animation: fadeIn 0.3s forwards;
@@ -364,85 +428,63 @@
   to { opacity: 1; }
 }
 
-/* Puzzle Editor */
-.editor-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+/* ===========================
+   PUZZLE HINT SYSTEM (RIGHT-SIDE LABEL VERSION)
+=========================== */
+
+.hint {
+  border-width: 3px !important;
+  border-style: solid !important;
+  position: relative;
+  animation: hintPulse 1.2s infinite ease-in-out;
+  transition: background 0.25s, border-color 0.25s, color 0.25s;
+  z-index: 10;
 }
 
-.editor-left {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+/* Light Mode Hint */
+.light .hint {
+  border-color: #d32f2f !important;
+  background: #fff !important;
+  color: var(--text-light) !important;
+  box-shadow: 0 0 8px rgba(255, 0, 0, 0.3) !important;
 }
 
-.editor-right {
-  border-left: 2px solid #ffffff20;
-  padding-left: 1rem;
+/* Dark Mode Hint (white outline) */
+.dark .hint {
+  border-color: #ffffff !important;
+  border-width: 4px !important;
+  background: #2b2b2b !important;
+  color: var(--text-dark) !important;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8) !important;
 }
 
-.editor-input,
-.editor-textarea,
-.editor-codearea {
-  width: 100%;
-  padding: 0.6rem;
-  border-radius: var(--border-radius);
-  border: 1px solid #aaa;
-  background: var(--card-bg-light);
+/* Right-side Incorrect Tag */
+.incorrect-label {
+  margin-left: auto;
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
-.dark .editor-input,
-.dark .editor-textarea,
-.dark .editor-codearea {
-  background: var(--card-bg-dark);
-  border: 1px solid #555;
-  color: var(--text-dark);
+/* Light mode incorrect label */
+.light .incorrect-label {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
 }
 
-.editor-codearea {
-  min-height: 80px;
+/* Dark mode incorrect label */
+.dark .incorrect-label {
+  background: #c62828;
+  color: #000;
+  border: 1px solid #ff99ff;
 }
 
-.editor-block {
-  padding: 0.6rem;
-  background: var(--card-bg-light);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-soft);
-}
-
-.dark .editor-block {
-  background: var(--card-bg-dark);
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  .editor-layout {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Admin Grid */
-.admin-grid {
-  margin-top: 1rem;
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-}
-
-.admin-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.admin-code {
-  background: rgba(0, 0, 0, 0.05);
-  padding: 0.5rem;
-  border-radius: var(--border-radius);
-  font-size: 0.8rem;
-}
-
-.dark .admin-code {
-  background: rgba(255, 255, 255, 0.05);
+/* Soft glow pulse */
+@keyframes hintPulse {
+  0% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.2); }
+  50% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.9); }
+  100% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.2); }
 }

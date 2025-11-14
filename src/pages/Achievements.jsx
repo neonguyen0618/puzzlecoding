@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext.jsx";
-import { achievements } from "../../data/achievements.js";
+import { AuthContext } from "../context/AuthContext.jsx";
+import { achievements } from "../data/achievements.js";
 
 export default function AchievementsPage() {
   const { user } = useContext(AuthContext);
